@@ -1,4 +1,4 @@
-hwloc (2.9.0-1pexip1) pexip; urgency=medium
+hwloc (2.9.0-1pexip1) pexip-bookworm; urgency=medium
 
   * Prepare Pexip packaging
 
