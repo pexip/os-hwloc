@@ -4,12 +4,20 @@ include:
   - https://salsa.debian.org/salsa-ci-team/pipeline/raw/master/pipeline-jobs.yml
 
 variables:
-  # Disable reprotest until salsa-ci-team/pipeline#26 is resolved
-  SALSA_CI_DISABLE_REPROTEST: 1
+  # https://manpages.debian.org/unstable/reprotest/reprotest.1.en.html#Domain_or_host
+  SALSA_CI_REPROTEST_ARGS: --vary=domain_host.use_sudo=1
   SALSA_CI_REPROTEST_ENABLE_DIFFOSCOPE: 1
-  SALSA_CI_COMPONENTS: 'main contrib non-free'
+  SALSA_CI_ENABLE_BUILD_PACKAGE_PROFILES: 1
 
 test-crossbuild-arm64:
   allow_failure: false
+
+test-build-profiles:
+  extends: .test-build-package-profiles
+  parallel:
+    matrix:
+      - BUILD_PROFILES: nocheck
+      - BUILD_PROFILES: nodoc
+      - BUILD_PROFILES: pkg.hwloc.minimum
 
 # vim: ts=2 sw=2 et sts=2 ft=yaml
