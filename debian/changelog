@@ -1,3 +1,92 @@
+hwloc (2.12.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * tests-patches/use_system_hwloc: Refresh patch.
+
+ -- Samuel Thibault <sthibault@debian.org>  Mon, 17 Feb 2025 17:18:02 +0100
+
+hwloc (2.12.0~rc1-1) experimental; urgency=medium
+
+  * New upstream RC release.
+
+ -- Samuel Thibault <sthibault@debian.org>  Tue, 11 Feb 2025 14:17:32 +0100
+
+hwloc (2.11.2-1) unstable; urgency=medium
+
+  * New upstream release.
+    - patches/bash-completion: Upstreamed.
+  * tests/tests: Always unpatch on exit.
+
+ -- Samuel Thibault <sthibault@debian.org>  Mon, 30 Sep 2024 16:58:41 +0200
+
+hwloc (2.11.0-2) unstable; urgency=medium
+
+  * patches/bash-completion: Fix bash completion syntax error.
+
+ -- Samuel Thibault <sthibault@debian.org>  Wed, 03 Jul 2024 08:15:39 +0200
+
+hwloc (2.11.0-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Samuel Thibault <sthibault@debian.org>  Tue, 25 Jun 2024 21:56:11 +0200
+
+hwloc (2.11.0~rc1-1) experimental; urgency=medium
+
+  * New upstream RC release.
+  * watch: Track 2.11.
+  * control: Replace pkg-config build-dep with pkgconf.
+
+ -- Samuel Thibault <sthibault@debian.org>  Mon, 17 Jun 2024 14:56:52 +0200
+
+hwloc (2.10.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * rules: Disable gather topology test on hppa.
+
+ -- Samuel Thibault <sthibault@debian.org>  Tue, 05 Dec 2023 13:32:39 +0100
+
+hwloc (2.10.0~rc2-1) experimental; urgency=medium
+
+  * New upstream RC release.
+    - patches/smbios-big-endian: Upstreamed.
+
+ -- Samuel Thibault <sthibault@debian.org>  Thu, 23 Nov 2023 14:11:22 +0100
+
+hwloc (2.10.0~rc1-2) experimental; urgency=medium
+
+  * patches/smbios-big-endian: Fix smbios on big-endian architectures.
+
+ -- Samuel Thibault <sthibault@debian.org>  Thu, 23 Nov 2023 13:08:47 +0100
+
+hwloc (2.10.0~rc1-1) experimental; urgency=medium
+
+  * New upstream RC release.
+    - debian/tests-patches/use_system_hwloc: Refrsh.
+
+ -- Samuel Thibault <sthibault@debian.org>  Tue, 21 Nov 2023 15:16:41 +0100
+
+hwloc (2.9.3-2) unstable; urgency=medium
+
+  * control, rules: Add pkg.hwloc.minimum and nodoc build profiles to ease
+    bootstrapping ports with openmpi used by boost etc.
+
+ -- Samuel Thibault <sthibault@debian.org>  Sat, 04 Nov 2023 20:10:42 +0100
+
+hwloc (2.9.3-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Samuel Thibault <sthibault@debian.org>  Tue, 12 Sep 2023 20:28:47 +0200
+
+hwloc (2.9.2-1) unstable; urgency=medium
+
+  * New upstream release.
+  * control: Migrate build-dep from libncurses5-dev to libncurses-dev.
+  * control: Generalize pattern to support hurd-amd64.
+
+ -- Samuel Thibault <sthibault@debian.org>  Wed, 28 Jun 2023 11:05:10 +0200
+
 hwloc (2.9.0-1+pexip24u2) pexip-bookworm; urgency=medium
 
   * New versioning scheme

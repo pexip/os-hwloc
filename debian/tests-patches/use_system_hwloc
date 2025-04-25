@@ -24,10 +24,6 @@
  utils/lstopo/Makefile.am                                        |    5 ---
  utils/lstopo/test-lstopo-shmem.sh.in                            |    5 ---
  utils/lstopo/test-lstopo.sh.in                                  |    5 ---
- utils/netloc/draw/Makefile.am                                   |    3 --
- utils/netloc/infiniband/Makefile.am                             |    3 --
- utils/netloc/mpi/Makefile.am                                    |   11 -------
- utils/netloc/scotch/Makefile.am                                 |    5 ---
  29 files changed, 27 insertions(+), 117 deletions(-)
 
 --- a/doc/examples/Makefile.am
@@ -118,13 +114,14 @@
  export HWLOC_DEBUG_CHECK
 --- a/utils/hwloc/test-hwloc-info.sh.in
 +++ b/utils/hwloc/test-hwloc-info.sh.in
-@@ -13,12 +13,9 @@ HWLOC_top_srcdir="@HWLOC_top_srcdir@"
+@@ -13,13 +13,10 @@ HWLOC_top_srcdir="@HWLOC_top_srcdir@"
  HWLOC_top_builddir="@HWLOC_top_builddir@"
  srcdir="$HWLOC_top_srcdir/utils/hwloc"
  builddir="$HWLOC_top_builddir/utils/hwloc"
 -info="$builddir/hwloc-info"
 +info="/usr/bin/hwloc-info"
  linuxdir="$HWLOC_top_srcdir/tests/hwloc/linux"
+ xmldir="$HWLOC_top_srcdir/tests/hwloc/xml"
  
 -HWLOC_PLUGINS_PATH=${HWLOC_top_builddir}/hwloc/.libs
 -export HWLOC_PLUGINS_PATH
@@ -323,16 +320,16 @@
  endif HWLOC_HAVE_LINUX
 --- a/utils/lstopo/Makefile.am
 +++ b/utils/lstopo/Makefile.am
-@@ -15,9 +15,6 @@ AM_LDFLAGS = $(HWLOC_LDFLAGS)
+@@ -15,8 +15,7 @@ AM_LDFLAGS = $(HWLOC_LDFLAGS)
  LDADD = $(HWLOC_top_builddir)/hwloc/libhwloc.la \
  	$(HWLOC_top_builddir)/utils/hwloc/libutils_common.la
  
 -bin_PROGRAMS = \
 -        lstopo-no-graphics
--
++bin_PROGRAMS =
+ 
  EXTRA_DIST = \
          lstopo-android.c \
-         test-lstopo.output
 @@ -44,14 +41,12 @@ lstopo_SOURCES = $(lstopo_no_graphics_SO
  lstopo_CPPFLAGS = $(AM_CPPFLAGS)
  lstopo_LDADD = $(lstopo_no_graphics_LDADD)
@@ -344,67 +341,10 @@
  lstopo_LDADD += $(HWLOC_CAIRO_LIBS) $(HWLOC_X11_LIBS)
  endif
  if HWLOC_HAVE_WINDOWS
--bin_PROGRAMS += lstopo lstopo-win
- lstopo_SOURCES += lstopo-windows.c
- lstopo_CPPFLAGS += -DLSTOPO_HAVE_GRAPHICS
- if HWLOC_HAVE_USER32
---- a/utils/netloc/draw/Makefile.am
-+++ b/utils/netloc/draw/Makefile.am
-@@ -12,9 +12,6 @@ AM_CPPFLAGS = \
-         -I$(top_builddir)/include \
-         -I$(top_srcdir)/include
- 
--bin_PROGRAMS = \
--        netloc_draw_to_json
--
- netloc_draw_to_json_SOURCES = \
-         netloc_draw_to_json.c
- 
---- a/utils/netloc/infiniband/Makefile.am
-+++ b/utils/netloc/infiniband/Makefile.am
-@@ -19,9 +19,6 @@ AM_CPPFLAGS = \
-         -I$(top_builddir)/include \
-         -I$(top_srcdir)/include
- 
--bin_PROGRAMS = \
--        netloc_ib_extract_dats
--
- netloc_ib_extract_dats_SOURCES = \
-         netloc_ib_extract_dats.c
- 
---- a/utils/netloc/mpi/Makefile.am
-+++ b/utils/netloc/mpi/Makefile.am
-@@ -13,17 +13,6 @@ AM_LDFLAGS = $(HWLOC_LDFLAGS)
- LDADD = $(top_builddir)/netloc/libnetloc.la \
- 		$(top_builddir)/hwloc/libhwloc.la
- 
--if BUILD_MPITOOLS
--bin_PROGRAMS = \
--        netloc_rank_order \
--        netloc_mpi_find_hosts
--
--if BUILD_NETLOCSCOTCH
--bin_PROGRAMS += \
--        netloc_mpi_rank_file
--endif
--endif
--
- netloc_rank_order_SOURCES = netloc_rank_order.c
- 
- netloc_mpi_find_hosts_SOURCES = netloc_mpi_find_hosts.c
---- a/utils/netloc/scotch/Makefile.am
-+++ b/utils/netloc/scotch/Makefile.am
-@@ -15,10 +15,5 @@ LDADD = $(top_builddir)/netloc/libnetloc
-         $(top_builddir)/hwloc/libhwloc.la \
-         -lscotch -lscotcherr -lm -lpthread
- 
--if BUILD_NETLOCSCOTCH
--bin_PROGRAMS = \
--        netlocscotch_get_arch
--endif
--
- netlocscotch_get_arch_SOURCES = \
-         netlocscotch_get_arch.c
+-bin_PROGRAMS += lstopo
+ if !HWLOC_HAVE_MSVC
+ # only build lstopo-win if NOT building with MSVC (or Clang in MSVC mode) because
+ # MSVC doesn't support -mwindows, and lstopo-win would be identical to lstopo
 --- a/hwloc/Makefile.am
 +++ b/hwloc/Makefile.am
 @@ -13,12 +13,6 @@ EXTRA_DIST = dolib.c

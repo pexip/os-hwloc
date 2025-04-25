@@ -5,15 +5,23 @@
 
 include /usr/share/dpkg/architecture.mk
 
+ifeq (,$(filter nodoc,$(DEB_BUILD_PROFILES)))
+DOXYGEN = --enable-doxygen
+endif
+
+ifeq (,$(filter pkg.hwloc.minimum,$(DEB_BUILD_PROFILES)))
+PLUGINS = --enable-plugins
+endif
+
 override_dh_clean:
 	dh_clean
 	-rm -fr doc/doxygen-doc
 
 override_dh_auto_configure:
-	dh_auto_configure -- --enable-static --enable-plugins --enable-doxygen
+	dh_auto_configure -- --enable-static $(PLUGINS) $(DOXYGEN)
 
 override_dh_auto_install:
-	dh_auto_install
+	dh_auto_install --destdir=debian/tmp
 
 	mkdir -p $(CURDIR)/debian/tmp/usr/include/$(DEB_HOST_MULTIARCH)/hwloc/autogen
 	mv $(CURDIR)/debian/tmp/usr/include/hwloc/autogen/config.h $(CURDIR)/debian/tmp/usr/include/$(DEB_HOST_MULTIARCH)/hwloc/autogen/
@@ -21,6 +29,14 @@ override_dh_auto_install:
 override_dh_makeshlibs:
 	dh_makeshlibs -V
 
+NOTEST = HWLOC_TEST_DONTCHECK_PROC_CPULOCATION=1
+
+# Keep this while hppa's buildd is using qemu-user and
+# https://gitlab.com/qemu-project/qemu/-/issues/2004 happens there
+ifeq ($(DEB_HOST_ARCH_CPU),hppa)
+NOTEST += HWLOC_TEST_GATHER_TOPOLOGY=0
+endif
+
 override_dh_auto_test:
-	HWLOC_TEST_DONTCHECK_PROC_CPULOCATION=1 dh_auto_test -- -k || \
+	$(NOTEST) dh_auto_test -- -k || \
 		( cat $$(find . -name \*.log) ; false )

@@ -2,17 +2,21 @@ Source: hwloc
 Priority: optional
 Maintainer: Pexip AS <packaging@pexip.com>
 XSBC-Pexip-Original-Maintainer: Samuel Thibault <sthibault@debian.org>
-Build-Depends: debhelper-compat (= 12), dh-exec, libltdl-dev [!gnu-any-any],
-  valgrind-if-available,
-  libcairo2-dev, libx11-dev, libxml2-dev, libxml2-utils <!nocheck>, libncurses5-dev,
-  libnuma-dev [linux-any] <!nocheck>,
-  libxnvctrl-dev,
-  libpciaccess-dev, libudev-dev [linux-any], pkg-config,
-  ocl-icd-opencl-dev [!hurd-i386] | opencl-dev, opencl-headers,
+Build-Depends: debhelper-compat (= 12), dh-exec,
+  libltdl-dev [!gnu-any-any] <!pkg.hwloc.minimum>,
+  valgrind-if-available <!pkg.hwloc.minimum>,
+  libcairo2-dev <!pkg.hwloc.minimum>, libx11-dev <!pkg.hwloc.minimum>,
+  libxml2-dev <!pkg.hwloc.minimum>, libxml2-utils <!nocheck !pkg.hwloc.minimum>,
+  libncurses-dev <!pkg.hwloc.minimum>,
+  libnuma-dev [linux-any] <!nocheck !pkg.hwloc.minimum>,
+  libxnvctrl-dev <!pkg.hwloc.minimum>,
+  libpciaccess-dev <!pkg.hwloc.minimum>, libudev-dev [linux-any] <!pkg.hwloc.minimum>,
+  pkgconf,
+  ocl-icd-opencl-dev [!hurd-any] <!pkg.hwloc.minimum> | opencl-dev <!pkg.hwloc.minimum>, opencl-headers <!pkg.hwloc.minimum>,
   autoconf (>= 2.63),
 # w3m, if we ever need to update README
   dpkg-dev (>= 1.16)
-Build-Depends-Indep: doxygen-latex, transfig
+Build-Depends-Indep: doxygen-latex <!nodoc>, transfig <!nodoc>
 Build-Conflicts: autoconf2.13
 Rules-Requires-Root: no
 Standards-Version: 4.6.0
@@ -25,6 +29,7 @@ XS-Pexip-Upstream: http://deb.debian.org/debian/ trixie
 Package: hwloc
 Section: admin
 Architecture: any
+Build-Profiles: <!pkg.hwloc.minimum>
 Multi-Arch: foreign
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Hierarchical view of the machine - utilities
@@ -115,6 +120,7 @@ Description: Hierarchical view of the machine - shared libs
 Package: libhwloc-plugins
 Architecture: any
 Multi-Arch: same
+Build-Profiles: <!pkg.hwloc.minimum>
 Depends: ${shlibs:Depends}, ${misc:Depends}, libhwloc15 (>= ${source:Upstream-Version}~), libhwloc15 (<< ${source:Upstream-Version}A)
 Breaks: libhwloc-contrib-plugins (<< 2.1.0+dfsg-3~)
 Replaces: libhwloc-contrib-plugins (<< 2.1.0+dfsg-3~)
@@ -159,6 +165,7 @@ Description: Hierarchical view of the machine - common files
 Package: libhwloc-doc
 Section: doc
 Architecture: all
+Build-Profiles: <!nodoc>
 Multi-Arch: foreign
 Depends: ${misc:Depends}, libjs-jquery
 Description: Hierarchical view of the machine - documentation
