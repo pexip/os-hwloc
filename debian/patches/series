@@ -1,1 +1,4 @@
 doc-nopdf
+verbosity
+fix-test-several-levels-same-type
+work_around_legacy_max_proc_being_0
