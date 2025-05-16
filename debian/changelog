@@ -1,3 +1,26 @@
+hwloc (2.12.0-4) unstable; urgency=medium
+
+  * control: Drop librocm-smi-dev build-dep.
+
+ -- Samuel Thibault <sthibault@debian.org>  Sat, 03 May 2025 02:28:29 +0200
+
+hwloc (2.12.0-3) unstable; urgency=medium
+
+  * patches/fix-test-several-levels-same-type: Fix test when host has several
+    levels with same type (Closes: Bug#1103282)
+  * patches/work_around_legacy_max_proc_being_0: Fix undefined behavior on
+    systems with bogus legacy_max_proc information.
+
+ -- Samuel Thibault <sthibault@debian.org>  Fri, 02 May 2025 17:13:06 +0200
+
+hwloc (2.12.0-2) unstable; urgency=medium
+
+  * control: Add librocm-smi-dev libze-dev libibverbs-dev build-deps.
+  * patches/verbosity: Reduce verbosity of initialization errors of rocm and
+    levelzero.
+
+ -- Samuel Thibault <sthibault@debian.org>  Tue, 18 Feb 2025 13:26:46 +0100
+
 hwloc (2.12.0-1+pexip25u1) pexip-trixie; urgency=medium
 
   * Initial trixie build

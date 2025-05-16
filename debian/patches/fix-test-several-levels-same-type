@@ -1,0 +1,31 @@
+commit 9693e9f5f8ea3df749263faadc0eab77184dffb8 (HEAD -> master, mine/sscanf)
+Author: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Date:   Thu Apr 17 15:03:49 2025 +0200
+
+    hwloc_type_sscanf: fix test when host has several levels with same type
+    
+    E.g. with
+    
+    HWLOC_SYNTHETIC="group:2 group:2 pu:2" ./tests/hwloc/hwloc_type_sscanf
+    
+    The presence of the two group levels makes the check for level depth fail
+    for the hwloc_obj_type_string case which does not expose attributes
+    which allow to distinguish them.
+    
+    Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+
+---
+ tests/hwloc/hwloc_type_sscanf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/tests/hwloc/hwloc_type_sscanf.c
++++ b/tests/hwloc/hwloc_type_sscanf.c
+@@ -37,7 +37,7 @@ static void _check(hwloc_topology_t topo
+ 
+   err = hwloc_type_sscanf_as_depth(buffer, NULL, topology, &depth);
+   assert(!err);
+-  assert(depth == (int) obj->depth);
++  assert((depth == HWLOC_TYPE_DEPTH_MULTIPLE && !checkattrs) || depth == (int) obj->depth);
+ }
+ 
+ static void check(hwloc_topology_t topology, hwloc_obj_t obj)

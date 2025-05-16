@@ -1,0 +1,41 @@
+We don't really want to scare all people about missing rocm and zero drivers.
+
+---
+ hwloc/topology-levelzero.c |    2 +-
+ hwloc/topology-nvml.c      |    2 +-
+ hwloc/topology-rsmi.c      |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+--- a/hwloc/topology-rsmi.c
++++ b/hwloc/topology-rsmi.c
+@@ -285,7 +285,7 @@ hwloc_rsmi_discover(struct hwloc_backend
+     if (HWLOC_SHOW_ALL_ERRORS()) {
+       const char *status_string;
+       rsmi_status_string(ret, &status_string);
+-      fprintf(stderr, "hwloc/rsmi: Failed to initialize with rsmi_init(): %s\n", status_string);
++      hwloc_debug("hwloc/rsmi: Failed to initialize with rsmi_init(): %s\n", status_string);
+     }
+     return 0;
+   }
+--- a/hwloc/topology-nvml.c
++++ b/hwloc/topology-nvml.c
+@@ -195,7 +195,7 @@ hwloc_nvml_discover(struct hwloc_backend
+   if (NVML_SUCCESS != ret) {
+     if (HWLOC_SHOW_ALL_ERRORS()) {
+       const char *error = nvmlErrorString(ret);
+-      fprintf(stderr, "hwloc/nvml: Failed to initialize with nvmlInit(): %s\n", error);
++      hwloc_debug("hwloc/nvml: Failed to initialize with nvmlInit(): %s\n", error);
+     }
+     return -1;
+   }
+--- a/hwloc/topology-levelzero.c
++++ b/hwloc/topology-levelzero.c
+@@ -768,7 +768,7 @@ hwloc_levelzero_discover(struct hwloc_ba
+   res = zeInit(0);
+   if (res != ZE_RESULT_SUCCESS) {
+     if (HWLOC_SHOW_ALL_ERRORS()) {
+-      fprintf(stderr, "hwloc/levelzero: Failed to initialize in zeInit(): 0x%x\n", (unsigned)res);
++      hwloc_debug("hwloc/levelzero: Failed to initialize in zeInit(): 0x%x\n", (unsigned)res);
+     }
+     return 0;
+   }
